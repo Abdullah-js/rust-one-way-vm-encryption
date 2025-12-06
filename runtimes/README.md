@@ -45,13 +45,13 @@ g++ vmbx-runtime/vmbx_cpp.cpp -o vmbx_cpp -std=c++17
 
 ## Protection Features
 
-- 🔐 **SHA-256 Stream Cipher** encryption
-- 🎭 **Opaque Predicates** to confuse analysis
-- 💀 **Dead Code Injection** for obfuscation
-- 🚫 **Anti-Debug** checks
-- 🔑 **Symbol Table Encryption**
-- 📝 **String Encryption**
-- 🗺️ **Source Map Encryption**
+-  **SHA-256 Stream Cipher** encryption
+-  **Opaque Predicates** to confuse analysis
+-  **Dead Code Injection** for obfuscation
+-  **Anti-Debug** checks
+-  **Symbol Table Encryption**
+-  **String Encryption**
+-  **Source Map Encryption**
 
 ## License
 
