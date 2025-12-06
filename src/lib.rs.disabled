@@ -1,0 +1,57 @@
+
+pub mod bytecode;
+pub mod compiler;
+pub mod vm_generator;
+pub mod languages;
+
+// New modules
+pub mod encryption;
+pub mod compression;
+pub mod isa;
+pub mod vm_core;
+pub mod anti_debug;
+pub mod vm_obfuscation;
+pub mod build_pipeline;
+pub mod web;
+
+pub use bytecode::{BytecodeModule, Opcode};
+pub use compiler::Compiler;
+pub use vm_generator::VmGenerator;
+pub use languages::Language;
+
+// Re-export new types
+pub use encryption::{EncryptionKey, EncryptedPayload};
+pub use compression::PayloadCompressor;
+pub use isa::{ExtendedOpcode, OpcodeMapping};
+pub use vm_core::{VmState, VmConfig, VmValue};
+pub use anti_debug::{DebuggerDetector, DebugResponse};
+pub use vm_obfuscation::{NestedOpcode, ObfuscationConfig};
+pub use build_pipeline::{BuildPipeline, BuildConfig, BuildOutput};
+pub use web::{VirtualizerServer, ServerConfig};
+
+pub fn virtualize(source: &str, language: Language) -> Result<VirtualizedOutput, String> {
+    let compiler = Compiler::new(language);
+    let bytecode = compiler.compile(source)?;
+    let vm_code = VmGenerator::generate(&bytecode, language)?;
+    
+    Ok(VirtualizedOutput {
+        bytecode: bytecode.to_bytes(),
+        bytecode_display: bytecode.to_hex_string(),
+        vm_runtime: vm_code,
+        language,
+    })
+}
+
+#[derive(Debug, Clone)]
+pub struct VirtualizedOutput {
+    pub bytecode: Vec<u8>,
+    pub bytecode_display: String,
+    pub vm_runtime: String,
+    pub language: Language,
+}
+
+impl VirtualizedOutput {
+    pub fn to_protected_code(&self) -> String {
+        self.vm_runtime.clone()
+    }
+}
